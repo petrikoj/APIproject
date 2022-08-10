@@ -100,8 +100,7 @@ function createBS5Cards(data) {
   }
 }
 
-/// CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES
-
+/// NOT WORKING YET: CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES ///
 function cardViewToggler(data) {
   let images = document.getElementsByClassName("card-img-top");
   for (let i = 0; i < images.length; i++)
@@ -118,6 +117,19 @@ function cardViewToggler(data) {
 }
 
 flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
+
+/// CHECKBOX FILTER FUNCTION
+
+function filterByColor() {
+  const colorFilterValue = document.querySelectorAll(".form-check-input").value;
+  console.log(colorFilterValue);
+
+  // createBS5Cards(filteredCards);
+}
+
+document
+  .getElementById("button-addon1")
+  .addEventListener("change", filterByColor);
 
 // /// SEARCH BAR FUNCTI)ON
 
@@ -140,6 +152,7 @@ flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
 function myController(data) {
   cardViewToggler(data);
   createBS5Cards(data);
+  filterByColor(data);
   // mySearch(data);
 }
 
