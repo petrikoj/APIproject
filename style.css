@@ -1,0 +1,18 @@
+.input-group {
+    margin: auto;
+    width: 30vw;
+}
+
+.filter-checkboxes {
+    display: flex;
+    justify-content: center;
+}
+.form-check-label {
+    width: 1rem;
+    height: 1rem;
+}
+
+.colorless-mana-icon {
+    width: 1rem;
+    height: 1rem;
+}
