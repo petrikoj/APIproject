@@ -1,4 +1,4 @@
-/// CREATING A BOOTSTRAP 5 NAVBAR
+/// CREATING A BOOTSTRAP 5 NAVBAR WITH DOM FOR PRACTICE ///
 
 const navbarContainer = document.getElementById("navbar");
 navbarContainer.style.marginBottom = "15vh";
@@ -28,19 +28,21 @@ navbarOutside.appendChild(navbarInside);
 navbarInside.appendChild(navbarContent1);
 navbarInside.appendChild(navbarContent2);
 
-//// STYLING THE PAGE HEADLINE
+/// STYLING THE PAGE HEADLINE ///
 
 const pageHeadline = document.querySelector("h1");
 pageHeadline.classList.add("text-center");
 pageHeadline.style.marginBottom = "10vh";
 
-////// GET MY DATA WITH LIVE FETCH
+/// GET MY DATA WITH LIVE FETCH (TO BE CREATED) ///
 
 // let artistFirstName = "Magali";
 // let artistSecondName = "Tucker";
 // let searchTerm = "artist:" + artistFirstName + "artist:" + artistSecondName;
 // let searchTerm = "artist:" + artistFirstName;
 // console.log("searchTerm :>> ", searchTerm);
+
+/// FETCH THE DATA ///
 
 const fetchDataAsync = async () => {
   try {
@@ -54,6 +56,8 @@ const fetchDataAsync = async () => {
     console.log("error :>> ", error);
   }
 };
+
+/// ANOTHER WAY OF WRITING THE FETCH FUNCTION ///
 
 // function getData() {
 //   fetch(
@@ -70,6 +74,8 @@ const fetchDataAsync = async () => {
 //       console.log("error");
 //     });
 // }
+
+/// DISPLAY THE RESULT WITH BOOTSTRAP 5 CARDS ///
 
 function createBS5Cards(data) {
   const divContainer = document.getElementById("api-data");
@@ -100,7 +106,8 @@ function createBS5Cards(data) {
   }
 }
 
-/// NOT WORKING YET: CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES ///
+/// CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES (NOT WORKING YET!) ///
+
 function cardViewToggler(data) {
   let images = document.getElementsByClassName("card-img-top");
   for (let i = 0; i < images.length; i++)
@@ -118,66 +125,34 @@ function cardViewToggler(data) {
 
 flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
 
-/// CHECKBOX FILTER FUNCTION
+/// CHECKBOX FILTER FUNCTION (IN THE MAKING) ///
 
-function filterByColor() {
-  const colorFilterValue = document.querySelectorAll(".form-check-input").value;
-  console.log(colorFilterValue);
-
-  // createBS5Cards(filteredCards);
-}
+const filterByColor = (cards) => {
+  let checkboxes = document.querySelectorAll('input[name="color"]:checked');
+  let values = [];
+  checkboxes.forEach((checkbox) => {
+    values.push(checkbox.value);
+  });
+  // alert(values);
+};
 
 document
   .getElementById("button-addon1")
-  .addEventListener("change", filterByColor);
+  .addEventListener("click", filterByColor);
 
-// /// SEARCH BAR FUNCTI)ON
-
-// function mySearch(data) {
-//   let input = document.getElementById("inputField").value;
-
-//   for (i = 0; i < data.length; i++) {
-//     if (data[i] == input) {
-//       alert(data[i]);
-//       return;
-//     }
-//   }
-//   alert("Value not found");
-// }
-
-// document.getElementById("button-addon1").addEventListener("click", mySearch);
-
-/// ADDING A CONTROLLER FUNCTION
+/// ADDING A CONTROLLER FUNCTION ///
 
 function myController(data) {
   cardViewToggler(data);
   createBS5Cards(data);
   filterByColor(data);
-  // mySearch(data);
 }
 
 fetchDataAsync();
 
-////////////
+//////////// RANDOM STUFF FOR LATER USE ////////
 
-///////
-
-/// SORTING THE CARDS ALPHABETICALLY
-
-// cards.sort((a, b) => {
-//   let cardA = a.name.toLowerCase(),
-//     cardB = b.name.toLowerCase();
-
-//   if (cardA < cardB) {
-//     return -1;
-//   }
-//   if (cardA > cardB) {
-//     return 1;
-//   }
-//   return 0;
-// });
-
-///// REMOVING DUPLICATE EDITIONS
+/// REMOVING DUPLICATE EDITIONS ///
 
 //   const removeDuplicate = (result.cards) => {
 //     const appeared = {};
@@ -192,34 +167,3 @@ fetchDataAsync();
 //   };
 //   removeDuplicate(cards);
 //   console.log("cards without duplicates", cards);
-
-/////// SORT ARR.OBJECTS ALPHABETICALL BY THEIR "name"
-
-// cards.sort((a, b) => {
-//   let cardA = a.name.toLowerCase(),
-//     cardB = b.name.toLowerCase();
-
-//   if (cardA < cardB) {
-//     return -1;
-//   }
-//   if (cardA > cardB) {
-//     return 1;
-//   }
-//   return 0;
-// });
-
-// ///// REMOVING DUPLICATE EDITIONS
-
-// const removeDuplicate = (cards) => {
-//   const appeared = {};
-//   for (let i = 0; i < cards.length; ) {
-//     if (!appeared.hasOwnProperty(cards[i].name)) {
-//       appeared[cards[i].name] = 1;
-//       i++;
-//       continue;
-//     }
-//     cards.splice(i, 1);
-//   }
-// };
-// removeDuplicate(cards);
-// console.log("cards without duplicates", cards);
