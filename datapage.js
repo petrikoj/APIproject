@@ -127,13 +127,21 @@ flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
 
 /// CHECKBOX FILTER FUNCTION (IN THE MAKING) ///
 
-const filterByColor = (cards) => {
+const filterByColor = (data) => {
   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
   let values = [];
   checkboxes.forEach((checkbox) => {
     values.push(checkbox.value);
   });
   // alert(values);
+  let filteredCards = [];
+  for (let i = 0; i < data.length; i++)
+    for (let j = 0; i < data.color_identity.length; j++)
+      if (data[i].color_identity.includes(values)) {
+        filteredCards.push(data[i]);
+      }
+  console.log(filteredCards);
+  createBS5Cards(filteredCards);
 };
 
 document
