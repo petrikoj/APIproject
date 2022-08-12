@@ -17,7 +17,7 @@ navbarInside.setAttribute(
 const navbarContent1 = document.createElement("a");
 navbarContent1.classList.add("navbar-brand");
 navbarContent1.setAttribute("href", "./index.html");
-navbarContent1.innerHTML = "MTG API PROJECT";
+navbarContent1.innerHTML = "API PROJECT";
 const navbarContent2 = document.createElement("a");
 navbarContent2.classList.add("nav-link");
 navbarContent2.setAttribute("aria-current", "page");
@@ -59,24 +59,6 @@ const fetchDataAsync = async () => {
   }
 };
 
-/// ANOTHER WAY OF WRITING THE FETCH FUNCTION ///
-
-// function getData() {
-//   fetch(
-//     "https://api.scryfall.com/cards/search?q=(artist%3ADrew+artist%3ATucker)"
-//   )
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((result) => {
-//       console.log("data", result);
-//       myController(result.data);
-//     })
-//     .catch((error) => {
-//       console.log("error");
-//     });
-// }
-
 /// DISPLAY THE RESULT WITH BOOTSTRAP 5 CARDS ///
 
 function createBS5Cards(data) {
@@ -108,7 +90,7 @@ function createBS5Cards(data) {
   }
 }
 
-/// CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES (NOT WORKING YET!) ///
+/// CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES ///
 
 function cardViewToggler() {
   let images = document.getElementsByClassName("card-img-top");
@@ -122,12 +104,20 @@ function cardViewToggler() {
       images[i].classList.add("crop");
       images[i].setAttribute("src", globalDataStore[i].image_uris.art_crop);
     }
-  return images;
 }
 
-flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
+// function cardViewToggler(data) {
+//   let images = document.getElementsByClassName("card-img-top");
+//   const mySwitch = document.getElementById("flexSwitchCheckDefault");
+//   if ((mySwitch.checked = true)) {
+//     for (let i = 0; i < images.length; i++)
+//       images[i].setAttribute("src", globalDataStore[i].image_uris.large);
+//   } else if ((mySwitch.checked = false)) {
+//     images[i].removeAttribute("src", globalDataStore[i].image_uris.large);
+//   }
+// }
 
-/// CHECKBOX FILTER FUNCTION (IN THE MAKING) ///
+/// CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) ///
 
 const filterByColor = () => {
   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
@@ -137,9 +127,15 @@ const filterByColor = () => {
   });
   let filteredCards = globalDataStore.filter((card) => {
     let hasColorToFilterFor = false;
-    card.color_identity.forEach((color) => {
+    card.colors.forEach((color) => {
       hasColorToFilterFor = colorsToFilterFor.includes(color);
     });
+    /// ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
+    // if (card.color_identity === undefined && card.color_identity.length == 0) {
+    // }
+
+    // if (card.color_identity.length > 1)
+    ///
     return hasColorToFilterFor;
   });
   console.log("here are my nicely filtered cards!", filteredCards);
@@ -147,18 +143,35 @@ const filterByColor = () => {
   createBS5Cards(filteredCards);
 };
 
-document
-  .getElementById("button-addon1")
-  .addEventListener("click", filterByColor);
+/// CLEAR THE CHECKBOXES
+
+// function uncheckCheckboxes() {
+//   const uncheck = document.getElementsByClassName("input-check-form");
+//   for (let i = 0; i < uncheck.length; i++) {
+//     if (uncheck[i].type == "checkbox") {
+//       uncheck[i].checked = false;
+//     }
+//   }
+// }
+
+/// SET EVENT LISTENERS ///
+
+function setEventListeners() {
+  document
+    .getElementById("button-addon1")
+    .addEventListener("click", filterByColor);
+  flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
+}
 
 /// ADDING A CONTROLLER FUNCTION ///
 
 function myController(data) {
-  //cardViewToggler(data);
   createBS5Cards(data);
-  //filterByColor(data);
   globalDataStore = data;
+  setEventListeners(data);
 }
+
+/// INITIAL FUNCTION CALL -> FETCH ///
 
 fetchDataAsync();
 
