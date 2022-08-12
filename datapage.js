@@ -1,3 +1,5 @@
+var globalDataStore;
+
 /// CREATING A BOOTSTRAP 5 NAVBAR WITH DOM FOR PRACTICE ///
 
 const navbarContainer = document.getElementById("navbar");
@@ -108,17 +110,17 @@ function createBS5Cards(data) {
 
 /// CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES (NOT WORKING YET!) ///
 
-function cardViewToggler(data) {
+function cardViewToggler() {
   let images = document.getElementsByClassName("card-img-top");
   for (let i = 0; i < images.length; i++)
     if (images[i].classList.contains("crop")) {
       images[i].classList.remove("crop");
       images[i].classList.add("large");
-      images[i].setAttribute("src", data[i].image_uris.large);
+      images[i].setAttribute("src", globalDataStore[i].image_uris.large);
     } else if (images[i].classList.contains("large")) {
       images[i].classList.remove("large");
       images[i].classList.add("crop");
-      images[i].setAttribute("src", data[i].image_uris.art_crop);
+      images[i].setAttribute("src", globalDataStore[i].image_uris.art_crop);
     }
   return images;
 }
@@ -127,20 +129,21 @@ flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
 
 /// CHECKBOX FILTER FUNCTION (IN THE MAKING) ///
 
-const filterByColor = (data) => {
+const filterByColor = () => {
   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
-  let values = [];
+  let colorsToFilterFor = [];
   checkboxes.forEach((checkbox) => {
-    values.push(checkbox.value);
+    colorsToFilterFor.push(checkbox.value);
   });
-  // alert(values);
-  let filteredCards = [];
-  for (let i = 0; i < data.length; i++)
-    for (let j = 0; i < data.color_identity.length; j++)
-      if (data[i].color_identity.includes(values)) {
-        filteredCards.push(data[i]);
-      }
-  console.log(filteredCards);
+  let filteredCards = globalDataStore.filter((card) => {
+    let hasColorToFilterFor = false;
+    card.color_identity.forEach((color) => {
+      hasColorToFilterFor = colorsToFilterFor.includes(color);
+    });
+    return hasColorToFilterFor;
+  });
+  console.log("here are my nicely filtered cards!", filteredCards);
+  document.getElementById("api-data").innerHTML = "";
   createBS5Cards(filteredCards);
 };
 
@@ -151,9 +154,10 @@ document
 /// ADDING A CONTROLLER FUNCTION ///
 
 function myController(data) {
-  cardViewToggler(data);
+  //cardViewToggler(data);
   createBS5Cards(data);
-  filterByColor(data);
+  //filterByColor(data);
+  globalDataStore = data;
 }
 
 fetchDataAsync();
