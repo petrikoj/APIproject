@@ -15,7 +15,7 @@ navbarInside.setAttribute(
 const navbarContent1 = document.createElement("a");
 navbarContent1.classList.add("navbar-brand");
 navbarContent1.setAttribute("href", "./index.html");
-navbarContent1.innerHTML = "MTG API PROJECT";
+navbarContent1.innerHTML = "API PROJECT";
 const navbarContent2 = document.createElement("a");
 navbarContent2.classList.add("nav-link");
 navbarContent2.setAttribute("href", "./data.html");

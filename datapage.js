@@ -63,6 +63,7 @@ const fetchDataAsync = async () => {
 
 function createBS5Cards(data) {
   const divContainer = document.getElementById("api-data");
+  const mySwitch = document.getElementById("flexSwitchCheckDefault");
   for (let i = 0; i < data.length; i++) {
     const divCard = document.createElement("div");
     divCard.classList.add("card");
@@ -71,9 +72,15 @@ function createBS5Cards(data) {
 
     const img = document.createElement("img");
     img.classList.add("card-img-top");
-    img.classList.add("crop");
-    img.setAttribute("src", data[i].image_uris.art_crop);
     img.setAttribute("alt", data[i].name);
+    if ((mySwitch.checked = false)) {
+      img.classList.add("crop");
+      img.setAttribute("src", data[i].image_uris.art_crop);
+    } else if ((mySwitch.checked = true)) {
+      img.classList.remove("crop");
+      img.classList.add("large");
+      img.setAttribute("src", data[i].image_uris.large);
+    }
 
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
@@ -94,6 +101,7 @@ function createBS5Cards(data) {
 
 function cardViewToggler() {
   let images = document.getElementsByClassName("card-img-top");
+  const mySwitch = document.getElementById("flexSwitchCheckDefault");
   for (let i = 0; i < images.length; i++)
     if (images[i].classList.contains("crop")) {
       images[i].classList.remove("crop");
@@ -103,18 +111,21 @@ function cardViewToggler() {
       images[i].classList.remove("large");
       images[i].classList.add("crop");
       images[i].setAttribute("src", globalDataStore[i].image_uris.art_crop);
+      mySwitch.checked = false;
     }
 }
 
-// function cardViewToggler(data) {
+// function cardViewToggler() {
 //   let images = document.getElementsByClassName("card-img-top");
 //   const mySwitch = document.getElementById("flexSwitchCheckDefault");
-//   if ((mySwitch.checked = true)) {
-//     for (let i = 0; i < images.length; i++)
+//   for (let i = 0; i < images.length; i++)
+//     if ((mySwitch.checked = true)) {
 //       images[i].setAttribute("src", globalDataStore[i].image_uris.large);
-//   } else if ((mySwitch.checked = false)) {
-//     images[i].removeAttribute("src", globalDataStore[i].image_uris.large);
-//   }
+//     } else {
+//       images[i].removeAttribute("src", globalDataStore[i].image_uris.large);
+//       images[i].setAttribute("src", globalDataStore[i].image_uris.large);
+//       mySwitch.checked = false;
+//     }
 // }
 
 /// CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) ///
@@ -131,7 +142,7 @@ const filterByColor = () => {
       hasColorToFilterFor = colorsToFilterFor.includes(color);
     });
     /// ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
-    // if (card.color_identity === undefined && card.color_identity.length == 0) {
+    // if (card.color_identity === undefined || card.color_identity.length == 0) {
     // }
 
     // if (card.color_identity.length > 1)
@@ -160,7 +171,9 @@ function setEventListeners() {
   document
     .getElementById("button-addon1")
     .addEventListener("click", filterByColor);
-  flexSwitchCheckDefault.addEventListener("change", cardViewToggler);
+  document
+    .getElementById("flexSwitchCheckDefault")
+    .addEventListener("change", cardViewToggler);
 }
 
 /// ADDING A CONTROLLER FUNCTION ///
