@@ -64,6 +64,7 @@ const fetchDataAsync = async () => {
 function createBS5Cards(data) {
   const divContainer = document.getElementById("api-data");
   const mySwitch = document.getElementById("flexSwitchCheckDefault");
+  divContainer.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     const divCard = document.createElement("div");
     divCard.classList.add("card");
@@ -107,6 +108,7 @@ function cardViewToggler() {
       images[i].classList.remove("crop");
       images[i].classList.add("large");
       images[i].setAttribute("src", globalDataStore[i].image_uris.large);
+      mySwitch.checked = true;
     } else if (images[i].classList.contains("large")) {
       images[i].classList.remove("large");
       images[i].classList.add("crop");
@@ -128,7 +130,7 @@ function cardViewToggler() {
 //     }
 // }
 
-/// CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) ///
+/// CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) //
 
 const filterByColor = () => {
   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
@@ -141,29 +143,19 @@ const filterByColor = () => {
     card.colors.forEach((color) => {
       hasColorToFilterFor = colorsToFilterFor.includes(color);
     });
-    /// ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
-    // if (card.color_identity === undefined || card.color_identity.length == 0) {
-    // }
-
-    // if (card.color_identity.length > 1)
+    /// TO DO: ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
+    // if (card.colors === undefined)
+    // if (card.colors.length > 1)
     ///
     return hasColorToFilterFor;
   });
-  console.log("here are my nicely filtered cards!", filteredCards);
-  document.getElementById("api-data").innerHTML = "";
+  console.log("Here are my nicely filtered cards:", filteredCards);
   createBS5Cards(filteredCards);
 };
 
-/// CLEAR THE CHECKBOXES
+/// COMBINE FILTERS
 
-// function uncheckCheckboxes() {
-//   const uncheck = document.getElementsByClassName("input-check-form");
-//   for (let i = 0; i < uncheck.length; i++) {
-//     if (uncheck[i].type == "checkbox") {
-//       uncheck[i].checked = false;
-//     }
-//   }
-// }
+/// HELPER FUNCTIONS
 
 /// SET EVENT LISTENERS ///
 
@@ -178,7 +170,7 @@ function setEventListeners() {
 
 /// ADDING A CONTROLLER FUNCTION ///
 
-function myController(data) {
+async function myController(data) {
   createBS5Cards(data);
   globalDataStore = data;
   setEventListeners(data);
