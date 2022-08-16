@@ -19,7 +19,7 @@ navbarContent1.innerHTML = "API PROJECT";
 const navbarContent2 = document.createElement("a");
 navbarContent2.classList.add("nav-link");
 navbarContent2.setAttribute("href", "./data.html");
-navbarContent2.innerHTML = "CARDS";
+navbarContent2.innerHTML = "ARTISTS";
 navbarContent2.style.color = "ghostwhite";
 
 navbarContainer.appendChild(navbarOutside);

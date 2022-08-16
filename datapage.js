@@ -1,11 +1,12 @@
-// var globalDataStore;
+///
 
-/// FETCH THE DATA ///
-let artistFirstName = "Amy";
-let artistLastName = "Weber";
+let artistFirstName = "Drew";
+let artistLastName = "Tucker";
 let artistToSearchFor = artistFirstName + artistLastName || artistFirstName;
 
-const fetchDataAsync = async () => {
+/// FETCH THE DATA ///
+
+const fetchDataAsync = async (artistToSearchFor) => {
   try {
     const response = await fetch(
       `https://api.scryfall.com/cards/search?q=(artist:${artistToSearchFor})`
@@ -21,89 +22,81 @@ const fetchDataAsync = async () => {
 
 /// CREATING A BOOTSTRAP 5 NAVBAR WITH DOM FOR PRACTICE ///
 
-const navbarContainer = document.getElementById("navbar");
-navbarContainer.style.marginBottom = "15vh";
-const navbarOutside = document.createElement("nav");
-navbarOutside.classList.add("navbar");
-navbarOutside.setAttribute("class", "fixed-top navbar-dark bg-secondary");
-const navbarInside = document.createElement("div");
-navbarInside.style.height = "8vh";
-navbarInside.classList.add("container-fluid");
-navbarInside.setAttribute(
-  "class",
-  "d-flex justify-content-center align-items-center"
-);
-const navbarContent1 = document.createElement("a");
-navbarContent1.classList.add("navbar-brand");
-navbarContent1.setAttribute("href", "./index.html");
-navbarContent1.innerHTML = "API PROJECT";
-const navbarContent2 = document.createElement("a");
-navbarContent2.classList.add("nav-link");
-navbarContent2.setAttribute("aria-current", "page");
-navbarContent2.setAttribute("href", "./data.html");
-navbarContent2.innerHTML = "CARDS";
-navbarContent2.style.color = "ghostwhite";
+function createMyPage(data) {
+  const navbarContainer = document.getElementById("navbar");
+  navbarContainer.style.marginBottom = "15vh";
+  const navbarOutside = document.createElement("nav");
+  navbarOutside.classList.add("navbar");
+  navbarOutside.setAttribute("class", "fixed-top navbar-dark bg-secondary");
+  const navbarInside = document.createElement("div");
+  navbarInside.style.height = "8vh";
+  navbarInside.classList.add("container-fluid");
+  navbarInside.setAttribute(
+    "class",
+    "d-flex justify-content-center align-items-center"
+  );
+  const navbarContent1 = document.createElement("a");
+  navbarContent1.classList.add("navbar-brand");
+  navbarContent1.setAttribute("href", "./index.html");
+  navbarContent1.innerHTML = "API PROJECT";
+  // const navbarContent2 = document.createElement("a");
+  // navbarContent2.classList.add("nav-link");
+  // navbarContent2.setAttribute("aria-current", "page");
+  // navbarContent2.setAttribute("href", "./data.html");
+  // navbarContent2.innerHTML = "CARDS";
+  // navbarContent2.style.color = "ghostwhite";
 
-const myDropdown = document.createElement("div");
-myDropdown.classList.add("dropdown");
-const myDropdownButton = document.createElement("button");
-myDropdownButton.setAttribute("class", "btn btn-secondary dropdown-toggle");
-myDropdownButton.setAttribute("type", "button");
-myDropdownButton.setAttribute("id", "dropdownMenu2");
-myDropdownButton.setAttribute("data-bs-toggle", "dropdown");
-myDropdownButton.setAttribute("aria-expanded", "false");
-myDropdownButton.innerHTML = "MORE ARTISTS";
-const myDropdownMenu = document.createElement("ul");
-myDropdownMenu.classList.add("dropdown-menu");
-myDropdownMenu.setAttribute("aria-labelledby", "dropdownMenu2");
-const myDropdownItem1 = document.createElement("li");
-const myDropdownButton1 = document.createElement("button");
-myDropdownButton1.classList.add("dropdown-item");
-myDropdownButton1.setAttribute("type", "button");
-myDropdownButton1.innerHTML = "Rebecca Guay";
-const myDropdownItem2 = document.createElement("li");
-const myDropdownButton2 = document.createElement("button");
-myDropdownButton2.classList.add("dropdown-item");
-myDropdownButton2.setAttribute("type", "button");
-myDropdownButton2.innerHTML = "Tom Wänerstrand";
-const myDropdownItem3 = document.createElement("li");
-const myDropdownButton3 = document.createElement("button");
-myDropdownButton3.classList.add("dropdown-item");
-myDropdownButton3.setAttribute("type", "button");
-myDropdownButton3.innerHTML = "Amy Weber";
+  const myDropdown = document.createElement("div");
+  myDropdown.classList.add("dropdown");
+  const myDropdownButton = document.createElement("button");
+  myDropdownButton.setAttribute("class", "btn btn-secondary dropdown-toggle");
+  myDropdownButton.setAttribute("type", "button");
+  myDropdownButton.setAttribute("id", "dropdownMenu2");
+  myDropdownButton.setAttribute("data-bs-toggle", "dropdown");
+  myDropdownButton.setAttribute("aria-expanded", "false");
+  myDropdownButton.innerHTML = "ARTISTS";
+  const myDropdownMenu = document.createElement("ul");
+  myDropdownMenu.classList.add("dropdown-menu");
+  myDropdownMenu.setAttribute("aria-labelledby", "dropdownMenu2");
+  const myDropdownItem1 = document.createElement("li");
+  const myDropdownButton1 = document.createElement("button");
+  myDropdownButton1.classList.add("dropdown-item");
+  myDropdownButton1.setAttribute("type", "button");
+  myDropdownButton1.innerHTML = "Rebecca Guay";
+  const myDropdownItem2 = document.createElement("li");
+  const myDropdownButton2 = document.createElement("button");
+  myDropdownButton2.classList.add("dropdown-item");
+  myDropdownButton2.setAttribute("type", "button");
+  myDropdownButton2.innerHTML = "Tom Wänerstrand";
+  const myDropdownItem3 = document.createElement("li");
+  const myDropdownButton3 = document.createElement("button");
+  myDropdownButton3.classList.add("dropdown-item");
+  myDropdownButton3.setAttribute("type", "button");
+  myDropdownButton3.setAttribute("id", "amyWeberBtn");
+  myDropdownButton3.innerHTML = "Amy Weber";
 
-navbarContainer.appendChild(navbarOutside);
-navbarOutside.appendChild(navbarInside);
-navbarInside.appendChild(navbarContent1);
-navbarInside.appendChild(navbarContent2);
-navbarInside.appendChild(myDropdown);
-myDropdown.appendChild(myDropdownButton);
-myDropdown.appendChild(myDropdownMenu);
-myDropdownMenu.appendChild(myDropdownItem1);
-myDropdownItem1.appendChild(myDropdownButton1);
-myDropdownMenu.appendChild(myDropdownItem2);
-myDropdownItem2.appendChild(myDropdownButton2);
-myDropdownMenu.appendChild(myDropdownItem3);
-myDropdownItem3.appendChild(myDropdownButton3);
+  navbarContainer.appendChild(navbarOutside);
+  navbarOutside.appendChild(navbarInside);
+  navbarInside.appendChild(navbarContent1);
+  // navbarInside.appendChild(navbarContent2);
+  navbarInside.appendChild(myDropdown);
+  myDropdown.appendChild(myDropdownButton);
+  myDropdown.appendChild(myDropdownMenu);
+  myDropdownMenu.appendChild(myDropdownItem1);
+  myDropdownItem1.appendChild(myDropdownButton1);
+  myDropdownMenu.appendChild(myDropdownItem2);
+  myDropdownItem2.appendChild(myDropdownButton2);
+  myDropdownMenu.appendChild(myDropdownItem3);
+  myDropdownItem3.appendChild(myDropdownButton3);
 
-/// CREATING THE PAGE HEADLINE ///
+  /// CREATING THE PAGE HEADLINE ///
 
-const pageHeadline = document.querySelector("h1");
-pageHeadline.classList.add("text-center");
-pageHeadline.style.marginBottom = "10vh";
-pageHeadline.innerHTML = `Every Single Magic: The Gathering Card Illustrated by ${artistFirstName} ${artistLastName}`;
+  const pageHeadline = document.querySelector("h1");
+  pageHeadline.classList.add("text-center");
+  pageHeadline.style.marginBottom = "10vh";
+  pageHeadline.innerHTML = `Every Single Magic: The Gathering Card Illustrated by ${artistFirstName} ${artistLastName}`;
 
-/// GET MY DATA WITH LIVE FETCH (TO BE CREATED) ///
-
-// let artistFirstName = "Magali";
-// let artistSecondName = "Tucker";
-// let searchTerm = "artist:" + artistFirstName + "artist:" + artistSecondName;
-// let searchTerm = "artist:" + artistFirstName;
-// console.log("searchTerm :>> ", searchTerm);
-
-/// DISPLAY THE RESULT WITH BOOTSTRAP 5 CARDS ///
-
-function createBS5Cards(data) {
+  // function createBS5Cards(data) --- NOW INSIDE CREATYMYPAGE --- {
   const divContainer = document.getElementById("api-data");
   const mySwitch = document.getElementById("flexSwitchCheckDefault");
   divContainer.innerHTML = "";
@@ -116,18 +109,8 @@ function createBS5Cards(data) {
     const img = document.createElement("img");
     img.classList.add("card-img-top");
     img.setAttribute("alt", data[i].name);
-    if ((mySwitch.checked = false)) {
-      console.log("1", mySwitch.checked);
-      img.classList.add("crop");
-      img.setAttribute("src", data[i].image_uris.art_crop);
-    } else {
-      console.log("2", mySwitch.checked);
-
-      img.classList.remove("crop");
-      img.classList.add("large");
-      img.setAttribute("src", data[i].image_uris.large);
-      mySwitch.checked = true;
-    }
+    img.classList.add("crop");
+    img.setAttribute("src", data[i].image_uris.art_crop);
 
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
@@ -164,6 +147,8 @@ function cardViewToggler(data) {
     }
 }
 
+/// FILTERS COMBINED
+
 const filtersCombined = (data) => {
   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
   let colorsToFilterFor = [];
@@ -199,23 +184,11 @@ const filtersCombined = (data) => {
       }
 
     console.log("Here are my nicely filtered cards:", filteredCards);
-    createBS5Cards(filteredCards);
+    createMyPage(filteredCards);
   });
 };
-// function cardViewToggler() {
-//   let images = document.getElementsByClassName("card-img-top");
-//   const mySwitch = document.getElementById("flexSwitchCheckDefault");
-//   for (let i = 0; i < images.length; i++)
-//     if ((mySwitch.checked = true)) {
-//       images[i].setAttribute("src", globalDataStore[i].image_uris.large);
-//     } else {
-//       images[i].removeAttribute("src", globalDataStore[i].image_uris.large);
-//       images[i].setAttribute("src", globalDataStore[i].image_uris.large);
-//       mySwitch.checked = false;
-//     }
-// }
 
-/// CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) //
+// / CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) //
 
 // const filterByColor = (data) => {
 //   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
@@ -234,42 +207,22 @@ const filtersCombined = (data) => {
 //     ///
 //     return hasColorToFilterFor;
 //   });
+
 //   console.log("Here are my nicely filtered cards:", filteredCards);
 //   createBS5Cards(filteredCards);
 //   cardViewToggler(filteredCards);
 // };
 
-/// COMBINE FILTERS
+/// DROPDOWN EVENTS
 
-// const filtersCombined = (card) => {
-//   let images = document.getElementsByClassName("card-img-top");
-//   const mySwitch = document.getElementById("flexSwitchCheckDefault");
-
-//   const checkedCheckboxes = document.querySelectorAll(
-//     'input[name="color"]:checked'
-//   );
-//   const checkedCheckboxesArray = Array.from(checkedCheckboxes);
-//   const checkboxValues = checkedCheckboxesArray.map((checkbox) => {
-//     return checkbox.value;
-//   });
-// };
-
-/// HELPER FUNCTIONS
-
-// const isColorless = () => {
-//   const colorlessCheckbox = document.getElementById("inlineCheckbox6");
-//   const myCards = globalDataStore;
-//   myCards.forEach((card) => {
-//     if (
-//       (colorlessCheckbox.checked = true && card.colors === undefined) ||
-//       (colorlessCheckbox.checked = true && card.colors == null)
-//     ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   });
-// };
+// function selectArtist() {
+//   let artistToSearchFor = `AmyWeber`;
+//   fetchDataAsync(artistToSearchFor);
+//   createMyPage(artistToSearchFor);
+// }
+// document.getElementById("amyWeberBtn").addEventListener("click", () => {
+//   selectArtist(artistToSearchFor);
+// });
 
 /// SET EVENT LISTENERS ///
 
@@ -290,14 +243,15 @@ function setEventListeners(data) {
 /// ADDING A CONTROLLER FUNCTION ///
 
 async function myController(data) {
-  createBS5Cards(data);
-  // globalDataStore = data;
+  createMyPage(data);
   setEventListeners(data);
+  // createBS5Cards(data);
+  // globalDataStore = data;
 }
 
 /// INITIAL FUNCTION CALL -> FETCH ///
 
-fetchDataAsync();
+fetchDataAsync(artistToSearchFor);
 
 //////////// RANDOM STUFF FOR LATER USE ////////
 
