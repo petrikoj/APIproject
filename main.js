@@ -47,7 +47,7 @@ bannerImage.setAttribute(
 );
 bannerImage.setAttribute("alt", "drawing of the mtg card high tide");
 const imageCaption = document.createElement("p");
-imageCaption.innerHTML = "High Tide (Fallen Empires, 1994)";
+imageCaption.innerHTML = "Drew Tucker: High Tide (Fallen Empires, 1994)";
 imageCaption.style.fontSize = "Smaller";
 
 bannerContainer.appendChild(bannerImage);
