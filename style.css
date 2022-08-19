@@ -1,18 +1,25 @@
-.input-group {
-    margin: auto;
-    width: 30vw;
-}
-
 .filter-checkboxes {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
 }
+
 .form-check-label {
     width: 1rem;
     height: 1rem;
 }
 
-.colorless-mana-icon {
-    width: 1rem;
-    height: 1rem;
+#switchText {
+    white-space: nowrap;
+    margin-right: 5rem;
+}
+
+.card-img-top {
+    transition: transform .2s;
+}
+
+.card-img-top:hover {
+    transform: scale(1.5);
 }

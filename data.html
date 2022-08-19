@@ -16,27 +16,24 @@
   <body>
     <div class="container" id="navbar"></div>
     <h1></h1>
-
-    <div class="input-group mb-3">
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        id="button-addon1"
-      >
-        Search
-      </button>
-      <input
-        id="inputField"
-        type="text"
-        class="form-control"
-        placeholder="e. g. 'Dust to Dust'"
-        aria-label="Example text with button addon"
-        aria-describedby="button-addon1"
-        role="search"
-      />
-    </div>
-
+    <!-- FILTER CHECKBOXES -->
     <div class="filter-checkboxes">
+      <div class="toggle-button">
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input outline-secondary"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+          />
+          <label
+            id="switchText"
+            class="form-check-label"
+            for="flexSwitchCheckDefault"
+            >Full Card</label
+          >
+        </div>
+      </div>
       <div class="form-check form-check-inline">
         <input
           class="form-check-input"
@@ -107,6 +104,7 @@
             alt="white mana symbol"
         /></label>
       </div>
+      <!-- JS NOT READY YET FOR MULTICOLORED AND COLORLESS ITEMS 
       <div class="form-check form-check-inline">
         <input
           class="form-check-input"
@@ -115,12 +113,7 @@
           id="inlineCheckbox6"
           value="C"
         />
-        <label class="form-check-label" for="inlineCheckbox6"
-          ><img
-            class="colorless-mana-icon"
-            src="https://media.wizards.com/2015/images/daily/Colorless-symbol.png"
-            alt="colorless mana symbol"
-        /></label>
+        <label class="form-check-label" for="inlineCheckbox6">Colorless</label>
       </div>
       <div class="form-check form-check-inline">
         <input
@@ -131,20 +124,17 @@
           value="M"
         />
         <label class="form-check-label" for="inlineCheckbox7">Multicolor</label>
-      </div>
-    </div>
+      </div> -->
 
-    <div class="form-check form-switch">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        role="switch"
-        id="flexSwitchCheckDefault"
-      />
-      <label class="form-check-label" for="flexSwitchCheckDefault"
-        >Display whole card</label
+      <button
+        id="filterBtn"
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
       >
+        🔍 FILTER
+      </button>
     </div>
+    <!-- END OF FILTERS -->
     <div class="container">
       <div class="row" id="api-data"></div>
     </div>

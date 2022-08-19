@@ -1,7 +1,7 @@
-///
+/// DECLARE INITAL FETCH TARGET
 
-let artistFirstName = "Drew";
-let artistLastName = "Tucker";
+let artistFirstName = "Rebecca";
+let artistLastName = "Guay";
 let artistToSearchFor = artistFirstName + artistLastName || artistFirstName;
 
 /// FETCH THE DATA ///
@@ -13,16 +13,20 @@ const fetchDataAsync = async (artistToSearchFor) => {
     );
     // "https://api.scryfall.com/cards/search?q=(artist%3ADrew+artist%3ATucker)"
     const result = await response.json();
-    console.log("result :>> ", result);
-    myController(result.data);
+    console.log("Result of fetchDataAsync() :>> ", result);
+    myController(result.data, artistToSearchFor);
   } catch (error) {
     console.log("error :>> ", error);
   }
 };
 
+/// INITIAL FUNCTION CALL -> FETCH ///
+
+fetchDataAsync(artistToSearchFor);
+
 /// CREATING A BOOTSTRAP 5 NAVBAR WITH DOM FOR PRACTICE ///
 
-function createMyPage(data) {
+function createMyPage(data, artistToSearchFor) {
   const navbarContainer = document.getElementById("navbar");
   navbarContainer.style.marginBottom = "15vh";
   const navbarOutside = document.createElement("nav");
@@ -72,7 +76,6 @@ function createMyPage(data) {
   const myDropdownButton3 = document.createElement("button");
   myDropdownButton3.classList.add("dropdown-item");
   myDropdownButton3.setAttribute("type", "button");
-  myDropdownButton3.setAttribute("id", "amyWeberBtn");
   myDropdownButton3.innerHTML = "Amy Weber";
 
   navbarContainer.appendChild(navbarOutside);
@@ -89,14 +92,15 @@ function createMyPage(data) {
   myDropdownMenu.appendChild(myDropdownItem3);
   myDropdownItem3.appendChild(myDropdownButton3);
 
-  /// CREATING THE PAGE HEADLINE ///
+  // CREATING THE PAGE HEADLINE //
 
   const pageHeadline = document.querySelector("h1");
   pageHeadline.classList.add("text-center");
   pageHeadline.style.marginBottom = "10vh";
-  pageHeadline.innerHTML = `Every Single Magic: The Gathering Card Illustrated by ${artistFirstName} ${artistLastName}`;
+  pageHeadline.innerHTML = `Every single Magic: The Gathering card illustrated by ${artistToSearchFor}`;
 
-  // function createBS5Cards(data) --- NOW INSIDE CREATYMYPAGE --- {
+  // CREATING MY BS5 CARDS //
+
   const divContainer = document.getElementById("api-data");
   const mySwitch = document.getElementById("flexSwitchCheckDefault");
   divContainer.innerHTML = "";
@@ -125,148 +129,94 @@ function createMyPage(data) {
     cardBody.appendChild(h5);
     divCard.appendChild(cardBody);
   }
+  passToFunction(data);
 }
 
 /// CREATE TOGGLE FUNCTION FOR TWO DIFFERENT VIEW MODES ///
 
-function cardViewToggler(data) {
-  console.log("cardViewToggler :>> ", data);
+function cardViewToggler(arrayToPass) {
+  console.log("Array received in cardViewToggler() :>> ", arrayToPass);
   let images = document.getElementsByClassName("card-img-top");
   const mySwitch = document.getElementById("flexSwitchCheckDefault");
   for (let i = 0; i < images.length; i++)
-    if (images[i].classList.contains("crop")) {
-      images[i].classList.remove("crop");
-      images[i].classList.add("large");
-      images[i].setAttribute("src", data[i].image_uris.large);
-      mySwitch.checked = true;
-    } else if (images[i].classList.contains("large")) {
-      images[i].classList.remove("large");
+    if (images[i].classList.contains("full")) {
+      images[i].classList.remove("full");
       images[i].classList.add("crop");
-      images[i].setAttribute("src", data[i].image_uris.art_crop);
-      mySwitch.checked = false;
+      images[i].setAttribute("src", arrayToPass[i].image_uris.art_crop);
+    } else if (images[i].classList.contains("crop")) {
+      images[i].classList.remove("crop");
+      images[i].classList.add("full");
+      images[i].setAttribute("src", arrayToPass[i].image_uris.border_crop);
     }
 }
 
-/// FILTERS COMBINED
+// / CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) //
 
-const filtersCombined = (data) => {
+const filterByColor = (arrayToPass) => {
   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
   let colorsToFilterFor = [];
   checkboxes.forEach((checkbox) => {
     colorsToFilterFor.push(checkbox.value);
-
-    let filteredCards = data.filter((card) => {
-      let hasColorToFilterFor = false;
-      card.colors.forEach((color) => {
-        hasColorToFilterFor = colorsToFilterFor.includes(color);
-      });
-      /// TO DO: ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
-      // if (card.colors === undefined)
-      // if (card.colors.length > 1)
-      ///
-      return hasColorToFilterFor;
-    });
-
-    console.log("cardViewToggler :>> ", data);
-    let images = document.getElementsByClassName("card-img-top");
-    const mySwitch = document.getElementById("flexSwitchCheckDefault");
-    for (let i = 0; i < images.length; i++)
-      if (images[i].classList.contains("crop")) {
-        images[i].classList.remove("crop");
-        images[i].classList.add("large");
-        images[i].setAttribute("src", data[i].image_uris.large);
-        mySwitch.checked = true;
-      } else if (images[i].classList.contains("large")) {
-        images[i].classList.remove("large");
-        images[i].classList.add("crop");
-        images[i].setAttribute("src", data[i].image_uris.art_crop);
-        mySwitch.checked = false;
-      }
-
-    console.log("Here are my nicely filtered cards:", filteredCards);
-    createMyPage(filteredCards);
   });
+  let filteredCards = arrayToPass.filter((card) => {
+    let hasColorToFilterFor = false;
+    card.colors.forEach((color) => {
+      // /// TO DO: ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
+      //     for (let i = 0; i < card.colors.length; i++)
+      //   if (card.colors.length === 0) {
+      //     card.colors == "C";
+      //     console.log(card);
+      //   } else if (card.colors.length > 1) {
+      //     card.colors == "M";
+      //     console.log(card);
+      //   }
+      hasColorToFilterFor = colorsToFilterFor.includes(color);
+    });
+    return hasColorToFilterFor;
+  });
+  console.log("Result of filterByColor() :>>", filteredCards);
+  createMyPage(filteredCards, artistToSearchFor);
 };
 
-// / CHECKBOX FILTER FUNCTION (NOT FULLY WORKING) //
+/// DROPDOWN EVENTS ///
 
-// const filterByColor = (data) => {
-//   let checkboxes = document.querySelectorAll('input[name="color"]:checked');
-//   let colorsToFilterFor = [];
-//   checkboxes.forEach((checkbox) => {
-//     colorsToFilterFor.push(checkbox.value);
-//   });
-//   let filteredCards = data.filter((card) => {
-//     let hasColorToFilterFor = false;
-//     card.colors.forEach((color) => {
-//       hasColorToFilterFor = colorsToFilterFor.includes(color);
-//     });
-//     /// TO DO: ADDING CONDITIONS FOR EMPTY ARRAYS + ARRAYS > 1
-//     // if (card.colors === undefined)
-//     // if (card.colors.length > 1)
-//     ///
-//     return hasColorToFilterFor;
-//   });
-
-//   console.log("Here are my nicely filtered cards:", filteredCards);
-//   createBS5Cards(filteredCards);
-//   cardViewToggler(filteredCards);
-// };
-
-/// DROPDOWN EVENTS
-
-// function selectArtist() {
-//   let artistToSearchFor = `AmyWeber`;
+// function selectArtist(input) {
+//   let artistToSearchFor = input;
 //   fetchDataAsync(artistToSearchFor);
-//   createMyPage(artistToSearchFor);
 // }
 // document.getElementById("amyWeberBtn").addEventListener("click", () => {
 //   selectArtist(artistToSearchFor);
 // });
 
+/// HELPER FUNCTION FOR TO RECEIVE THE ACTUAL DATA INSTEAD OF INITIAL FETCH
+
+function passToFunction(arrayToPass) {
+  createNewArrFunction(...arrayToPass);
+
+  function createNewArrFunction() {
+    console.log("Result of createNewArrFunction :>>", arrayToPass);
+    return arrayToPass;
+  }
+  setEventListeners(arrayToPass);
+  // cardViewToggler(arrayToPass);
+}
+
 /// SET EVENT LISTENERS ///
 
-function setEventListeners(data) {
-  console.log("data :>> ", data);
-  document.getElementById("button-addon1").addEventListener("click", () => {
-    // filterByColor(data);
-    filtersCombined(data);
+function setEventListeners(arrayToPass) {
+  document.getElementById("filterBtn").addEventListener("click", () => {
+    filterByColor(arrayToPass);
   });
 
   document
     .getElementById("flexSwitchCheckDefault")
     .addEventListener("change", function () {
-      cardViewToggler(data);
+      cardViewToggler(arrayToPass);
     });
 }
 
 /// ADDING A CONTROLLER FUNCTION ///
 
-async function myController(data) {
-  createMyPage(data);
-  setEventListeners(data);
-  // createBS5Cards(data);
-  // globalDataStore = data;
+async function myController(data, artistToSearchFor) {
+  createMyPage(data, artistToSearchFor);
 }
-
-/// INITIAL FUNCTION CALL -> FETCH ///
-
-fetchDataAsync(artistToSearchFor);
-
-//////////// RANDOM STUFF FOR LATER USE ////////
-
-/// REMOVING DUPLICATE EDITIONS ///
-
-//   const removeDuplicate = (result.cards) => {
-//     const appeared = {};
-//     for (let i = 0; i < cards.length; ) {
-//       if (!appeared.hasOwnProperty(cards[i].name)) {
-//         appeared[cards[i].name] = 1;
-//         i++;
-//         continue;
-//       }
-//       cards.splice(i, 1);
-//     }
-//   };
-//   removeDuplicate(cards);
-//   console.log("cards without duplicates", cards);
